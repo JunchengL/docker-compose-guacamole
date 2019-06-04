@@ -7,6 +7,12 @@ this will build three containers for using guacamole application:
 - mysql: database
 
 ## How to use
+Clone this repo:
+```
+git clone git@github.com:JunchengL/docker-compose-guacamole.git
+cd docker-compose-guacamole
+```
+
 Make a init directory to put database initiation script:
 ```
 mkdir init
