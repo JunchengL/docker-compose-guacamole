@@ -1,7 +1,10 @@
 # docker-compose-guacamole
 docker-compose file for guacamole quick start
 
-this will build three containers for using guacamole 
+this will build three containers for using guacamole application:
+- guacd: guacd is a daemon process which is installed along with Guacamole and runs in the background, listening for TCP connections from the web application.
+- guacamole: web application on Tomcat
+- mysql: database
 
 ## How to use
 Make a init directory to put database initiation script:
