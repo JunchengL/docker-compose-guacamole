@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+  #guacd configuration
+  guacd:
+    container_name: my-guacd
+    image: guacamole/guacd:latest
+    ports:
+    - 4822:4822
+    networks:
+      - my-bridge
+      
+  #guacamole configuration
+  guacamole:
+    container_name: my-guacamole
+    image: guacamole/guacamole:latest
+    ports:
+      - 8080:8080
+    environment:
+      GUACD_HOSTNAME: guacd
+      GUACD_PORT: 4822
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_HOSTNAME: mysql
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: test123456
+    networks:
+      - my-bridge
+    depends_on:
+      - mysql
+      - guacd
+  
+  #DB configuration with MYSQL
+  mysql:
+    container_name: my-mysql
+    image: mysql/mysql-server:latest
+    environment:
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: test123456
+    networks:
+      - my-bridge
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql
+
+networks:
+  my-bridge:
+    driver: bridge
